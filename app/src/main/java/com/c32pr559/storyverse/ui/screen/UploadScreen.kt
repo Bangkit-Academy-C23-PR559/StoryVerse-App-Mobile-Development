@@ -52,6 +52,9 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.c32pr559.storyverse.R
 import com.c32pr559.storyverse.ui.theme.Poppins
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import okhttp3.Call
 import okhttp3.Callback
@@ -87,6 +90,27 @@ fun UploadScreen(navController: NavController) {
     val snackbarHostState = remember { SnackbarHostState() }
     var isLoading by remember { mutableStateOf(false) }
     var isHintVisible by remember { mutableStateOf(true) }
+    val auth = Firebase.auth
+    val firestore = Firebase.firestore
+
+    val currentUser by remember {
+        mutableStateOf(auth.currentUser)
+    }
+
+    val userId by remember { mutableStateOf(currentUser?.uid) }
+
+    val userData by produceState<Map<String, Any>?>(null) {
+        userId?.let { uid ->
+            val userDocument = firestore.collection("users").document(uid)
+            userDocument.get().addOnSuccessListener { document ->
+                if (document.exists()) {
+                    value = document.data
+                }
+            }
+        }
+    }
+    val displayName = userData?.get("username") as String?
+
 
     Scaffold(
         topBar = {
@@ -179,51 +203,54 @@ fun UploadScreen(navController: NavController) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = {
-                        isLoading = true
-                        val imageFile = File(selectedImage?.path)
-                        val descriptionText = description
-                        val titleText = title
-                        val originalBitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
-                        val compressedByteArray = compressImage(originalBitmap)
+                       displayName?.let { username ->
+                           isLoading = true
+                           val imageFile = File(selectedImage?.path)
+                           val descriptionText = description
+                           val titleText = title
+                           val originalBitmap = BitmapFactory.decodeFile(imageFile.absolutePath)
+                           val compressedByteArray = compressImage(originalBitmap)
 
-                        val requestBody = MultipartBody.Builder()
-                            .setType(MultipartBody.FORM)
-                            .addFormDataPart("description", descriptionText)
-                            .addFormDataPart("title", titleText)
-                            .addFormDataPart("photo", "photo.jpg", RequestBody.create("image/jpeg".toMediaTypeOrNull(), compressedByteArray))
-                            .build()
+                           val requestBody = MultipartBody.Builder()
+                               .setType(MultipartBody.FORM)
+                               .addFormDataPart("description", descriptionText)
+                               .addFormDataPart("title", titleText)
+                               .addFormDataPart("username", username)
+                               .addFormDataPart("photo", "photo.jpg", RequestBody.create("image/jpeg".toMediaTypeOrNull(), compressedByteArray))
+                               .build()
 
-                        val request = Request.Builder()
-                            .url("https://backend-dot-storyverse-app.et.r.appspot.com/api/upload")
-                            .post(requestBody)
-                            .build()
+                           val request = Request.Builder()
+                               .url("https://backend-dot-storyverse-app.et.r.appspot.com/api/upload")
+                               .post(requestBody)
+                               .build()
 
-                        val client = OkHttpClient()
-                        client.newCall(request).enqueue(object : Callback {
-                            override fun onFailure(call: Call, e: IOException) {
-                                e.printStackTrace()
-                            }
+                           val client = OkHttpClient()
+                           client.newCall(request).enqueue(object : Callback {
+                               override fun onFailure(call: Call, e: IOException) {
+                                   e.printStackTrace()
+                               }
 
-                            override fun onResponse(call: Call, response: Response) {
-                                if (response.isSuccessful) {
-                                    val responseBody = response.body?.string()
-                                    if (responseBody != null) {
-                                        Log.d("Response", responseBody)
-                                    }
+                               override fun onResponse(call: Call, response: Response) {
+                                   if (response.isSuccessful) {
+                                       val responseBody = response.body?.string()
+                                       if (responseBody != null) {
+                                           Log.d("Response", responseBody)
+                                       }
 
-                                    coroutineScope.launch {
-                                        snackbarVisible = true
-                                        snackbarHostState.showSnackbar("Upload berhasil! Cerita Sedang Diproses")
-                                    }
-                                } else {
-                                    val errorMessage = response.body?.string()
-                                    if (errorMessage != null) {
-                                        Log.d("Failed", errorMessage)
-                                    }
-                                }
-                            }
+                                       coroutineScope.launch {
+                                           snackbarVisible = true
+                                           snackbarHostState.showSnackbar("Upload berhasil! Cerita Sedang Diproses")
+                                       }
+                                   } else {
+                                       val errorMessage = response.body?.string()
+                                       if (errorMessage != null) {
+                                           Log.d("Failed", errorMessage)
+                                       }
+                                   }
+                               }
 
-                        })
+                           })
+                       }
                     },
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     shape = RoundedCornerShape(15.dp),
