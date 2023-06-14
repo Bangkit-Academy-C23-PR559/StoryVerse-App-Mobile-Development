@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "426408488690",
+    "project_id": "storyverse-app",
+    "storage_bucket": "storyverse-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426408488690:android:bdd6fc9334eb04bdbf2a6b",
+        "android_client_info": {
+          "package_name": "com.c32pr559.storyverse"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "426408488690-0up9mm71ni3mq7m54cucqh4bh5nrjoh2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfYv4j5m5NLaPZX4QxNc8bolfwMW2ZX3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "426408488690-0up9mm71ni3mq7m54cucqh4bh5nrjoh2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
