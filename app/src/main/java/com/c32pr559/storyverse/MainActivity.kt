@@ -158,7 +158,6 @@ fun StoryVerseApp(
                     type = NavType.IntType
                 })
             ) {
-                // Dapatkan itemId dari argumen URL dan ubah menjadi tipe Int
                 val itemId = it.arguments?.getInt("id") ?: -1
 
                 if (itemId != null) {
