@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -38,6 +40,7 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -137,7 +140,7 @@ fun HomeScreen(
 
                             Box(
                                 modifier = Modifier.fillMaxSize(),
-                                    Alignment.Center
+                                Alignment.Center
                             ) {
                                 Column(
                                     modifier = Modifier
@@ -164,7 +167,7 @@ fun HomeScreen(
                                         .background(Color.Transparent)
                                         .background(Color.Black.copy(alpha = 0.7f))
                                         .padding(8.dp),
-                                    ) {
+                                ) {
                                     Text(
                                         text = "Hello, $displayName!",
                                         style = TextStyle(
@@ -443,5 +446,3 @@ fun CategoryButton(
         )
     }
 }
-
-

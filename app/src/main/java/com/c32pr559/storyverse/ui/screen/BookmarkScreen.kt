@@ -66,7 +66,7 @@ fun BookmarkItem(story: BookmarkStory, navigateToDetail: (Int) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(4.dp)
             .clickable { navigateToDetail(story.id) },
         elevation = 4.dp
     ) {

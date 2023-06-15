@@ -152,7 +152,7 @@ fun TopBarSetting(
             )
         },
         title = {
-            Text(text = "Pegaturan", style = TextStyle(fontFamily = Poppins, fontSize = 16.sp))
+            Text(text = "Pengaturan", style = TextStyle(fontFamily = Poppins, fontSize = 16.sp))
         },
         elevation = 0.dp,
         backgroundColor = Color(0xFFA5C67C)
