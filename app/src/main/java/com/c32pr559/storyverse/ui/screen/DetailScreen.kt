@@ -69,7 +69,6 @@ fun DetailScreen(
         Surface(modifier = Modifier.fillMaxSize()) {
             Scaffold(
                 topBar = {TopBar(moveToSettingPage = moveToSettingPage, navController)},
-//                bottomBar = { AdMobBanner() }
             ) {innerPadding ->
                 Box(modifier = Modifier.background(Color(0xFFF5F9F0))){
                     Column(
@@ -189,16 +188,3 @@ fun DetailScreen(
         }
     }
 }
-
-//@Composable
-//fun AdMobBanner() {
-//    val adUnitId = "YOUR_AD_UNIT_ID" // Ganti dengan ID unit iklan Anda
-//
-//    AndroidView(factory = { context ->
-//        val adView = AdView(context)
-//        adView.adSize = AdSize.BANNER
-//        adView.adUnitId = adUnitId
-//        adView.loadAd(AdRequest.Builder().build())
-//        adView
-//    })
-//}
