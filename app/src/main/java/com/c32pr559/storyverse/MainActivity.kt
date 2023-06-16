@@ -1,5 +1,7 @@
 package com.c32pr559.storyverse
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -46,10 +48,10 @@ import com.c32pr559.storyverse.ui.screen.ExploreScreen
 import com.c32pr559.storyverse.ui.screen.HomeScreen
 import com.c32pr559.storyverse.ui.screen.LoginScreen
 import com.c32pr559.storyverse.ui.screen.ProfileScreen
+import com.c32pr559.storyverse.ui.screen.RecommendScreen
 import com.c32pr559.storyverse.ui.screen.RegisterScreen
 import com.c32pr559.storyverse.ui.screen.SettingScreen
 import com.c32pr559.storyverse.ui.screen.UploadScreen
-import com.c32pr559.storyverse.ui.screen.WelcomeScreen
 import com.c32pr559.storyverse.ui.theme.Poppins
 import com.c32pr559.storyverse.ui.theme.StoryVerseTheme
 import com.c32pr559.storyverse.ui.viewmodel.BookmarkViewModel
@@ -58,8 +60,11 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : ComponentActivity() {
 
+    private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
         setContent {
             StoryVerseTheme {
@@ -94,7 +99,7 @@ fun StoryVerseApp(
 
     Scaffold(
         bottomBar = {
-            if (currentRoute != Screen.Detail.route && currentRoute != Screen.SettingPage.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route) {
+            if (currentRoute != Screen.Detail.route && currentRoute != Screen.SettingPage.route && currentRoute != Screen.Login.route && currentRoute != Screen.Register.route && currentRoute != Screen.Recommend.route) {
                 BottomBar(navController)
             }
         }
@@ -118,9 +123,6 @@ fun StoryVerseApp(
                         }
                     }
                 }
-            }
-            composable(Screen.Welcome.route) {
-                WelcomeScreen(navController)
             }
             composable(Screen.Login.route) {
                 LoginScreen(navController)
@@ -149,6 +151,7 @@ fun StoryVerseApp(
             }
             composable(Screen.Upload.route) { UploadScreen(navController) }
             composable(Screen.Profile.route) { ProfileScreen() }
+            composable(Screen.Recommend.route) { RecommendScreen(navController) }
 
             composable(
                 route = Screen.Detail.route,
@@ -176,7 +179,8 @@ fun StoryVerseApp(
                     bookmarkViewModel,
                     navigateToDetail = {id ->
                         navController.navigate(Screen.Detail.createRoute(id))
-                    }
+                    },
+                    moveToSettingPage = { navController.navigate(Screen.SettingPage.route)}
                 )
             }
         }
@@ -213,7 +217,7 @@ fun BottomBar(
                 screen = Screen.Bookmark
             ),
             NavigationItem(
-                title = stringResource(R.string.akun),
+                title = stringResource(R.string.account),
                 icon = Icons.Default.Person,
                 screen = Screen.Profile
             )

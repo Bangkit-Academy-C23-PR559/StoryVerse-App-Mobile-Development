@@ -49,7 +49,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.c32pr559.storyverse.R
 import com.c32pr559.storyverse.ui.theme.Poppins
 import com.google.firebase.auth.ktx.auth
@@ -123,7 +123,7 @@ fun UploadScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(R.string.upload_cerita_pengalaman),
+                    text = stringResource(R.string.upload_story),
                     style = TextStyle(
                         fontFamily = Poppins,
                         fontSize = 18.sp
@@ -149,7 +149,7 @@ fun UploadScreen(navController: NavController) {
                     selectedImage?.let { uri ->
                         Crossfade(targetState = uri) { targetUri ->
                             Image(
-                                painter = rememberImagePainter(targetUri),
+                                painter = rememberAsyncImagePainter(targetUri),
                                 contentDescription = "Gambar",
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -164,7 +164,7 @@ fun UploadScreen(navController: NavController) {
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = stringResource(R.string.upload_gambar_ilustrasi),
+                    text = stringResource(R.string.upload_image_story),
                     style = TextStyle(
                         fontFamily = Poppins,
                         fontSize = 12.sp,

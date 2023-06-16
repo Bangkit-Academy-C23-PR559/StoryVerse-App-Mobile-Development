@@ -19,9 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -68,6 +66,7 @@ import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.c32pr559.storyverse.R
 import com.c32pr559.storyverse.data.api.model.StoryResponse
+import com.c32pr559.storyverse.ui.viewmodel.RecommendViewModel
 import com.c32pr559.storyverse.ui.theme.Poppins
 import com.c32pr559.storyverse.ui.viewmodel.HomeViewModel
 import kotlinx.coroutines.delay
@@ -102,11 +101,15 @@ fun HomeScreen(
 
     LaunchedEffect(Unit) {
         while (true) {
-            delay(10000) // Ganti gambar setiap 3 detik
+            delay(10000)
             currentImageIndex = (currentImageIndex + 1) % imageList.size
         }
     }
     val currentImage = imageList[currentImageIndex]
+    val recommendViewModel: RecommendViewModel = viewModel()
+    val recommendedTitles by recommendViewModel.recommendedTitles.observeAsState(emptyList())
+    val recommendedTitlesString = recommendedTitles.map { it.title }
+
 
     Surface(modifier = Modifier.background(Color(0xFFF5F9F0))) {
         Column(modifier = Modifier
@@ -216,7 +219,7 @@ fun HomeScreen(
                             TextItem(stringResource(R.string.new_Story))
                             StoryList(storyList = homeViewModel.storyListResponse, navigateToDetail)
                             TextItem(stringResource(R.string.story_recommed))
-                            VerticalGridList(gridList = homeViewModel.storyListResponse, navController)
+                            VerticalGridList(gridList = homeViewModel.storyListResponse, navController, recommendedTitlesString)
                             homeViewModel.getStoryList()
                         }
                     }
@@ -227,15 +230,16 @@ fun HomeScreen(
 }
 
 @Composable
-fun VerticalGridList(gridList: List<StoryResponse>, navController: NavController) {
+fun VerticalGridList(gridList: List<StoryResponse>, navController: NavController, recommendedTitles: List<String>) {
     Column(
         modifier = Modifier
             .padding(16.dp)
     ) {
-        gridList.forEachIndexed { index, item ->
-            if (index % 2 == 0) {
-                GridItems(story = item, gridList.getOrNull(index + 1), navController)
-            }
+        val recommendList = gridList.filter { it.title in recommendedTitles}
+        for (index in 0 until recommendList.size step 2) {
+            val item = recommendList[index]
+            val nextItem = recommendList.getOrNull(index + 1)
+            GridItems(story = item, nextItem, navController)
         }
     }
 }

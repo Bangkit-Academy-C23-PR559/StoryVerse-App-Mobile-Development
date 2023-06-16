@@ -5,29 +5,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.c32pr559.storyverse.data.api.ApiService
 import com.c32pr559.storyverse.data.api.model.StoryResponse
 import com.c32pr559.storyverse.local.entity.BookmarkStory
 import com.c32pr559.storyverse.local.room.BookmarkDao
 import com.c32pr559.storyverse.local.room.BookmarkDatabase
-import com.c32pr559.storyverse.util.UiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class HomeViewModel(application: Application): AndroidViewModel(application){
     var storyListResponse: List<StoryResponse> by mutableStateOf(listOf())
     var items: List<StoryResponse> by mutableStateOf(emptyList())
     var errorMessage: String by mutableStateOf("")
-
-    private val _uiState: MutableStateFlow<UiState<StoryResponse>> = MutableStateFlow(UiState.Loading)
-    val uiState: StateFlow<UiState<StoryResponse>>
-        get() = _uiState
-
     private var bookmarkDao: BookmarkDao? = null
     private var bookmarkDB: BookmarkDatabase? = null
 

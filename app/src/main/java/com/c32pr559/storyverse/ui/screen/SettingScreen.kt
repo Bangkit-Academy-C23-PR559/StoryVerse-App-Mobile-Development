@@ -37,11 +37,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.c32pr559.storyverse.R
+import com.c32pr559.storyverse.local.room.RecommendDatabase
 import com.c32pr559.storyverse.ui.theme.Poppins
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun SettingScreen(navController: NavController) {
@@ -132,7 +136,11 @@ fun SettingScreen(navController: NavController) {
 }
 
 private fun performLogout(context: Context, firebaseAuth: FirebaseAuth, navController: NavController) {
+    val recommendDatabase = RecommendDatabase.getInstance(context)
     firebaseAuth.signOut()
+    CoroutineScope(Dispatchers.IO).launch {
+        recommendDatabase.clearDatabase()
+    }
     navController.navigate("login")
 }
 

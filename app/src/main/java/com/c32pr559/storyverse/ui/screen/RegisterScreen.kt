@@ -79,7 +79,7 @@ fun RegisterScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = stringResource(R.string.daftar),
+            text = stringResource(R.string.create_account),
             color = Color(0xFFD4A373),
             style = TextStyle(
                 fontFamily = Poppins,
@@ -100,7 +100,7 @@ fun RegisterScreen(navController: NavController) {
                 value = fullName,
                 maxLines = 1,
                 onValueChange = { fullName = it },
-                label = { Text(text = stringResource(R.string.nama_lengkap)) },
+                label = { Text(text = stringResource(R.string.full_name)) },
                 textStyle = TextStyle(
                     fontFamily = Poppins,
                     fontWeight = FontWeight.Normal,
@@ -115,7 +115,7 @@ fun RegisterScreen(navController: NavController) {
                 value = username,
                 maxLines = 1,
                 onValueChange = { username = it },
-                label = { Text(text = stringResource(R.string.nama_pengguna)) },
+                label = { Text(text = stringResource(R.string.username)) },
                 textStyle = TextStyle(
                     fontFamily = Poppins,
                     fontWeight = FontWeight.Normal,

@@ -162,7 +162,7 @@ fun LoginScreen(navController: NavController) {
                                     val user = auth.currentUser
                                     if (user != null && user.isEmailVerified) {
                                         // Verifikasi email sukses, izinkan login
-                                        navController.navigate("home")
+                                        navController.navigate("recommend")
                                     } else {
                                         // Email belum diverifikasi, tampilkan pesan
                                         Toast.makeText(

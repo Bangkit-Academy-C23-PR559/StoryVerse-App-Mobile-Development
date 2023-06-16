@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">StoryVerse</string>
-    <string name="daftar">Daftar</string>
-    <string name="nama_lengkap">Nama Lengkap</string>
-    <string name="nama_pengguna">Nama Pengguna</string>
+    <string name="create_account">Daftar</string>
+    <string name="full_name">Nama Lengkap</string>
+    <string name="username">Nama Pengguna</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="welcome">Welcome to StoryVerse!</string>
@@ -15,8 +15,9 @@
     <string name="explore">Explore</string>
     <string name="library">Library</string>
     <string name="upload">Upload</string>
-    <string name="akun">Profile</string>
+    <string name="account">Profile</string>
     <string name="input_image">Silakan masukkan berkas gambar terlebih dahulu.</string>
-    <string name="upload_cerita_pengalaman">Yuk Ceritakan Pengalamanmu</string>
-    <string name="upload_gambar_ilustrasi">Masukkan Gambar Sebagai Ilustrasi</string>
+    <string name="upload_story">Yuk Ceritakan Pengalamanmu</string>
+    <string name="upload_image_story">Masukkan Gambar Sebagai Ilustrasi</string>
+    <string name="recommended_story">Cerita Apa Yang Kamu Suka!</string>
 </resources>

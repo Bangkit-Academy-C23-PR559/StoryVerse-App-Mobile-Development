@@ -6,10 +6,10 @@ sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Upload : Screen("upload")
     object Bookmark : Screen("bookmark")
-    object Welcome : Screen("welcome")
     object Profile : Screen("profile")
     object SettingPage : Screen("setting_page")
     object Explore : Screen("explore")
+    object Recommend : Screen("recommend")
     object Detail : Screen("detail/{id}") {
         fun createRoute(id: Int) = "detail/$id"
     }
