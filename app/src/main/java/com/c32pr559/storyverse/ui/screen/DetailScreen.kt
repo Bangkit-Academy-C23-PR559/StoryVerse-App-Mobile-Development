@@ -38,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -174,17 +173,6 @@ fun DetailScreen(
                 }
 
             }
-        }
-    } else {
-        Column {
-            Text(
-                text = "Item not found",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                textAlign = TextAlign.Center
-            )
-            Text(text = "$id")
         }
     }
 }
